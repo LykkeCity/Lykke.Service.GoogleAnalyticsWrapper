@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories</AssemblyName>
+    <RootNamespace>Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lykke.Service.GoogleAnalyticsWrapper.Core\Lykke.Service.GoogleAnalyticsWrapper.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Lykke.AzureStorage" Version="7.0.2" />
+  </ItemGroup>
+</Project>
