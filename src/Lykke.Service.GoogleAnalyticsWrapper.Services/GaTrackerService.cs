@@ -67,8 +67,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 return;
             }
             
-            var walletEventName = await GetWalletEventNameAsync(model.Amount, model.AssetId);
-            var eventName = GetDepositWithdrawEventName(model.Amount, model.AssetId, baseAsset.Multiplier);
+            var walletEventName = await GetWalletEventNameAsync(assetAmount, model.AssetId);
+            var eventName = GetDepositWithdrawEventName(assetAmount, model.AssetId, baseAsset.Multiplier);
 
             if (eventName == null)
                 return;
@@ -81,7 +81,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             };
 
             await SendEvent(trackerInfo, TrackerCategories.Wallet, walletEventName);
-            await SendEvent(trackerInfo, TrackerCategories.Wallet, eventName, Math.Round(Math.Abs(model.Amount * baseAsset.Multiplier)).ToString(CultureInfo.InvariantCulture));
+            await SendEvent(trackerInfo, TrackerCategories.Wallet, eventName, Math.Round(Math.Abs(assetAmount * baseAsset.Multiplier)).ToString(CultureInfo.InvariantCulture));
         }
         
         private BaseAssetSettings GetBaseAsset(string assetId)
