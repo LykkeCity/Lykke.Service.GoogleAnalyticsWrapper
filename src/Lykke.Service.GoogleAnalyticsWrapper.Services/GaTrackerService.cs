@@ -77,7 +77,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             {
                 Ip = model.Ip,
                 UserAgent = model.UserAgent,
-                UserId = model.UserAgent
+                UserId = model.UserId
             };
 
             await SendEvent(trackerInfo, TrackerCategories.Wallet, walletEventName);
