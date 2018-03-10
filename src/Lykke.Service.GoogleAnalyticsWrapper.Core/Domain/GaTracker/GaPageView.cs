@@ -12,7 +12,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
             return new GaPageView
             {
                 TrackingId = trackingId,
-                Type = "pageview",
+                Type = GaHitType.GaPageView,
                 PageName = WebUtility.UrlEncode($"{category}/{action}"),
                 PageTitle = action,
                 UserId = src.ClientId,

@@ -118,5 +118,29 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             
             return Ok();
         }
+        
+        [HttpPost("trackTransaction")]
+        [SwaggerOperation("TrackTransaction")]
+        [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> TrackTransaction([FromBody]TransactionModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessage());
+
+            if (!model.UserId.IsValidPartitionOrRowKey())
+                return BadRequest($"Invalid {nameof(model.UserId)} value");
+
+            await _gaTrackerService.SendTransaction(new TransactionInfo{
+                Id = model.Id,
+                UserId = model.UserId, 
+                Amount = model.Amount, 
+                AssetId = model.AssetId, 
+                Fee = model.Fee,
+                FeeAssetId = model.FeeAssetId
+            });
+            
+            return Ok();
+        }
     }
 }

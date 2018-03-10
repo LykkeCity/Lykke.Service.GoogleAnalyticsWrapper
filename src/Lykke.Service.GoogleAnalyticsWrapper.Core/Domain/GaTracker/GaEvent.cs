@@ -11,7 +11,7 @@
             return new GaEvent
             {
                 TrackingId = trackingId,
-                Type = "event",
+                Type = GaHitType.GaEvent,
                 EventCategory = category,
                 EventAction = action,
                 EventValue = value,

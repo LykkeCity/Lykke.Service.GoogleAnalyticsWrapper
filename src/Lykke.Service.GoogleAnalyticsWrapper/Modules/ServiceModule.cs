@@ -60,6 +60,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Modules
                 .WithParameter(TypedParameter.From(_settings.CurrentValue.TrackAssets))
                 .WithParameter(TypedParameter.From(_settings.CurrentValue.GaSettings))
                 .WithParameter(TypedParameter.From(_settings.CurrentValue.IsLive))
+                .WithParameter(TypedParameter.From(_settings.CurrentValue.TransactionAssetId))
                 .SingleInstance();
             
             builder.RegisterInstance(

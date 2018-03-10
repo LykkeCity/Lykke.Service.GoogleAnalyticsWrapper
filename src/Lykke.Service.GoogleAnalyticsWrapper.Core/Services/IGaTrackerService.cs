@@ -7,5 +7,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Services
     {
         Task SendEvent(TrackerInfo model, string category, string eventName, string eventValue = null);
         Task SendWithdrawDepositEvent(WithdrawDepositInfo model);
+        Task SendTransaction(TransactionInfo model);
     }
 }

@@ -35,7 +35,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (gaUserId == null)
                 return NotFound();
             
-            return Ok(gaUserId);
+            return Json(gaUserId);
         }
     }
 }

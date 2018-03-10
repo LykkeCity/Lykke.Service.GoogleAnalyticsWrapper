@@ -21,6 +21,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         private readonly TrackAssetsSttings _trackAssetsSttings;
         private readonly GaSettings _gaSettings;
         private readonly bool _isLive;
+        private readonly string _transactionAssetId;
         private readonly ILog _log;
 
         public GaTrackerService(
@@ -29,6 +30,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             TrackAssetsSttings trackAssetsSttings,
             GaSettings gaSettings,
             bool isLive,
+            string transactionAssetId,
             ILog log
             )
         {
@@ -37,6 +39,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _trackAssetsSttings = trackAssetsSttings;
             _gaSettings = gaSettings;
             _isLive = isLive;
+            _transactionAssetId = transactionAssetId;
             _log = log;
         }
 
@@ -59,7 +62,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 return;
             }
 
-            var assetAmount = await GetAmountAsync(model.AssetId, model.Amount, baseAsset);
+            var assetAmount = await GetAmountAsync(model.AssetId, model.Amount, baseAsset.AssetId);
 
             if (assetAmount == 0)
             {
@@ -83,7 +86,31 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             await SendEvent(trackerInfo, TrackerCategories.Wallet, walletEventName);
             await SendEvent(trackerInfo, TrackerCategories.Wallet, eventName, Math.Round(Math.Abs(assetAmount * baseAsset.Multiplier)).ToString(CultureInfo.InvariantCulture));
         }
-        
+
+        public async Task SendTransaction(TransactionInfo model)
+        {
+            var amount = await GetAmountAsync(model.AssetId, model.Amount, _transactionAssetId);
+
+            if (amount == 0)
+            {
+                _log.WriteWarning(nameof(SendTransaction), model.UserId, $"Can't convert {model.Amount} {model.AssetId} to {_transactionAssetId}");
+                return;
+            }
+            
+            var feeAmount = await GetAmountAsync(model.FeeAssetId, model.Fee, _transactionAssetId);
+
+            if (feeAmount == 0)
+            {
+                _log.WriteWarning(nameof(SendTransaction), model.UserId, $"Can't convert {model.Fee} {model.FeeAssetId} to {_transactionAssetId}");
+                return;
+            }
+            
+            string gaUserId = await _gaUserService.GetGaUserIdAsync(model.UserId);
+
+            var transaction = GaTransaction.Create(_gaSettings.ApiKey, model.Id, gaUserId, Math.Abs(amount), feeAmount, _transactionAssetId);
+            await SendDataAsync(transaction);
+        }
+
         private BaseAssetSettings GetBaseAsset(string assetId)
         {
             if (_trackAssetsSttings.Fiat.Assets.Contains(assetId))
@@ -102,7 +129,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         
         private async Task<string> GetWalletEventNameAsync(double amount, string assetId)
         {
-            var baseAssetAmount = await GetAmountAsync(assetId, amount, _trackAssetsSttings.Fiat.BaseAsset);
+            var baseAssetAmount = await GetAmountAsync(assetId, amount, _trackAssetsSttings.Fiat.BaseAsset.AssetId);
 
             bool isDeposit = amount > 0;
 
@@ -117,11 +144,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             }
         }
         
-        private async Task<double> GetAmountAsync(string assetId, double amount, BaseAssetSettings baseAsset)
+        private async Task<double> GetAmountAsync(string assetId, double amount, string baseAssetId)
         {
-            return assetId == baseAsset.AssetId 
+            return assetId == baseAssetId 
                 ? amount 
-                : await _rateCalculatorClient.GetAmountInBaseAsync(assetId, amount, baseAsset.AssetId);
+                : await _rateCalculatorClient.GetAmountInBaseAsync(assetId, amount, baseAssetId);
         }
         
         private string GetDepositWithdrawEventName(double amount, string assetId, int multiplier)
@@ -171,15 +198,13 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             model.AppVersion = deviceInfo.AppVersion;
         }
         
-        private async Task SendDataAsync<T>(T model) where T: GaBaseEvent
+        private async Task SendDataAsync<T>(T model) where T: GaBaseHit
         {
             var data = model.Transform();
 
-            if (model is GaEvent)
+            if (model is GaEvent || model is GaTransaction)
             {
-                var gaEvent = model as GaEvent;
-
-                _log.WriteInfo(nameof(SendDataAsync), gaEvent, "sending request to tracker");
+                _log.WriteInfo(nameof(SendDataAsync), data, "sending request to tracker");
             }
 
             HttpResponseMessage response = await _gaSettings.ApiUrl
