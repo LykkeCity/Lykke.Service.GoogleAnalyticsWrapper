@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using AzureStorage.Tables;
 using Common.Log;
+using Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.GaTraffic;
 using Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.TrackerUser;
+using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaUser;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Settings;
@@ -66,6 +68,10 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Modules
             builder.RegisterInstance(
                 new GaUserRepository(AzureTableStorage<GaUserEntity>.Create(_settings.ConnectionString(x => x.Db.DataConnString), "TrackerUsers", _log))
             ).As<IGaUserRepository>().SingleInstance();
+            
+            builder.RegisterInstance(
+                new GaTrafficRepository(AzureTableStorage<GaTrafficEntity>.Create(_settings.ConnectionString(x => x.Db.DataConnString), "GaUsersTraffic", _log))
+            ).As<IGaTrafficRepository>().SingleInstance();
             
             builder.RegisterRateCalculatorClient(_allSettings.CurrentValue.RateCalculatorServiceClient.ServiceUrl, _log);
         }

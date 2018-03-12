@@ -30,10 +30,10 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
         public async Task<IActionResult> UserRegisteredEvent([FromBody]TrackEventModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessage());
+                return BadRequest(ErrorResponse.Create(ModelState.GetErrorMessage()));
 
             if (!model.UserId.IsValidPartitionOrRowKey())
-                return BadRequest($"Invalid {nameof(model.UserId)} value");
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
             await _gaTrackerService.SendEvent(new TrackerInfo
                 {
@@ -57,7 +57,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                 return BadRequest(ModelState.GetErrorMessage());
 
             if (!model.UserId.IsValidPartitionOrRowKey())
-                return BadRequest($"Invalid {nameof(model.UserId)} value");
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
             await _gaTrackerService.SendEvent(new TrackerInfo
                 {
@@ -81,7 +81,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                 return BadRequest(ModelState.GetErrorMessage());
 
             if (!model.UserId.IsValidPartitionOrRowKey())
-                return BadRequest($"Invalid {nameof(model.UserId)} value");
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
             await _gaTrackerService.SendEvent(new TrackerInfo
                 {
@@ -105,7 +105,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                 return BadRequest(ModelState.GetErrorMessage());
 
             if (!model.UserId.IsValidPartitionOrRowKey())
-                return BadRequest($"Invalid {nameof(model.UserId)} value");
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
             await _gaTrackerService.SendWithdrawDepositEvent(new WithdrawDepositInfo{
                 Amount = model.Amount, 
@@ -129,7 +129,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                 return BadRequest(ModelState.GetErrorMessage());
 
             if (!model.UserId.IsValidPartitionOrRowKey())
-                return BadRequest($"Invalid {nameof(model.UserId)} value");
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
             await _gaTrackerService.SendTransaction(new TransactionInfo{
                 Id = model.Id,

@@ -20,9 +20,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             /// </param>
             /// <param name='clientId'>
             /// </param>
-            public static object GetGaUserIdclientId(this IGoogleAnalyticsWrapperAPI operations, string clientId = default(string))
+            public static object GetGaUserId(this IGoogleAnalyticsWrapperAPI operations, string clientId)
             {
-                return operations.GetGaUserIdclientIdAsync(clientId).GetAwaiter().GetResult();
+                return operations.GetGaUserIdAsync(clientId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -33,12 +33,83 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetGaUserIdclientIdAsync(this IGoogleAnalyticsWrapperAPI operations, string clientId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetGaUserIdAsync(this IGoogleAnalyticsWrapperAPI operations, string clientId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetGaUserIdclientIdWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetGaUserIdWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            public static object GetGaUserTraffic(this IGoogleAnalyticsWrapperAPI operations, string clientId)
+            {
+                return operations.GetGaUserTrafficAsync(clientId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetGaUserTrafficAsync(this IGoogleAnalyticsWrapperAPI operations, string clientId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetGaUserTrafficWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            public static ErrorResponse AddGaUserTraffic(this IGoogleAnalyticsWrapperAPI operations, GaTrafficModel model = default(GaTrafficModel))
+            {
+                return operations.AddGaUserTrafficAsync(model).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ErrorResponse> AddGaUserTrafficAsync(this IGoogleAnalyticsWrapperAPI operations, GaTrafficModel model = default(GaTrafficModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddGaUserTrafficWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static void ApiGoogleUserTestGet(this IGoogleAnalyticsWrapperAPI operations)
+            {
+                operations.ApiGoogleUserTestGetAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ApiGoogleUserTestGetAsync(this IGoogleAnalyticsWrapperAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ApiGoogleUserTestGetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -168,6 +239,32 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             public static async Task<ErrorResponse> WithdrawDepositEventAsync(this IGoogleAnalyticsWrapperAPI operations, WithdrawDepositEventModel model = default(WithdrawDepositEventModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.WithdrawDepositEventWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            public static ErrorResponse TrackTransaction(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel))
+            {
+                return operations.TrackTransactionAsync(model).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ErrorResponse> TrackTransactionAsync(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TrackTransactionWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

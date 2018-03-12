@@ -32,7 +32,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
         /// <inheritdoc />
         public async Task<string> GetGaUserIdAsync(string clientId)
         {
-            var response = await _service.GetGaUserIdclientIdAsync(clientId);
+            var response = await _service.GetGaUserIdAsync(clientId);
             
             switch (response)
             {
@@ -43,6 +43,34 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
             }
 
             throw new Exception(TechnicalProblem);
+        }
+
+        /// <inheritdoc />
+        public async Task<GaTraffic> GetGaUserTrafficAsync(string clientId)
+        {
+            var response = await _service.GetGaUserTrafficAsync(clientId);
+
+            if (response == null)
+                return null;
+            
+            switch (response)
+            {
+                case GaTraffic result:
+                    return result;
+                case ErrorResponse error:
+                    throw new Exception(error.ErrorMessage);
+            }
+
+            throw new Exception(TechnicalProblem);
+        }
+
+        /// <inheritdoc />
+        public async Task AddGaUserTrafficAsync(GaTrafficModel model)
+        {
+            var response = await _service.AddGaUserTrafficAsync(model);
+
+            if (response != null)
+                throw new Exception(response.ErrorMessage);
         }
 
         /// <inheritdoc />
