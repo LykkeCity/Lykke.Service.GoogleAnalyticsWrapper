@@ -7,5 +7,6 @@
         string Medium { get; }
         string Campaign { get; }
         string Keyword { get; }
+        string Content { get; }
     }
 }

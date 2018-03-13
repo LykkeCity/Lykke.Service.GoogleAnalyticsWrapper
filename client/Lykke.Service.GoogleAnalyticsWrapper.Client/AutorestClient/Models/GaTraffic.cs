@@ -22,13 +22,14 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the GaTraffic class.
         /// </summary>
-        public GaTraffic(string clientId = default(string), string source = default(string), string medium = default(string), string campaign = default(string), string keyword = default(string))
+        public GaTraffic(string clientId = default(string), string source = default(string), string medium = default(string), string campaign = default(string), string keyword = default(string), string content = default(string))
         {
             ClientId = clientId;
             Source = source;
             Medium = medium;
             Campaign = campaign;
             Keyword = keyword;
+            Content = content;
             CustomInit();
         }
 
@@ -61,6 +62,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// </summary>
         [JsonProperty(PropertyName = "Keyword")]
         public string Keyword { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "Content")]
+        public string Content { get; set; }
 
     }
 }

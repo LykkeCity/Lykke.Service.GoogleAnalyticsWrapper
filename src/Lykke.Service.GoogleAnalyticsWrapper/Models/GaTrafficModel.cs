@@ -10,5 +10,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Models
         public string Medium { get; set; }
         public string Campaign { get; set; }
         public string Keyword { get; set; }
+        public string Content { get; set; }
     }
 }

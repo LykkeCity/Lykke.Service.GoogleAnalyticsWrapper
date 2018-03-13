@@ -10,7 +10,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.GaTraffic
         public string Medium { get; set; }
         public string Campaign { get; set; }
         public string Keyword { get; set; }
-        
+        public string Content { get; set; }
+
         internal static string GeneratePartitionKey() => "GaTraffic";
         internal static string GenerateRowKey(string clientId) => clientId;
 
@@ -24,7 +25,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.GaTraffic
                 Source = src.Source,
                 Medium = src.Medium,
                 Campaign = src.Campaign,
-                Keyword = src.Keyword
+                Keyword = src.Keyword,
+                Content = src.Content
             };
         }
     }

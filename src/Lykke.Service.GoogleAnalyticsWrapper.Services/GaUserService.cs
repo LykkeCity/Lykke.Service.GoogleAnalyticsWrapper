@@ -72,7 +72,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                     Source = cachedValue.Source,
                     Medium = cachedValue.Medium,
                     Campaign = cachedValue.Campaign,
-                    Keyword = cachedValue.Keyword
+                    Keyword = cachedValue.Keyword,
+                    Content = cachedValue.Content
                 };
         }
         

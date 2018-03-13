@@ -93,25 +93,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static void ApiGoogleUserTestGet(this IGoogleAnalyticsWrapperAPI operations)
-            {
-                operations.ApiGoogleUserTestGetAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task ApiGoogleUserTestGetAsync(this IGoogleAnalyticsWrapperAPI operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.ApiGoogleUserTestGetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
             /// <summary>
             /// Checks service is alive
             /// </summary>

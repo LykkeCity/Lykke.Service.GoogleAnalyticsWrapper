@@ -9,21 +9,21 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
     {
         public static void ParseClientInfo(this DeviceInfo deviceInfo, string clientInfo)
         {
-            if (!string.IsNullOrEmpty(clientInfo))
-            {
-                var values = clientInfo.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (string.IsNullOrEmpty(clientInfo))
+                return;
+            
+            var values = clientInfo.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (values.Length != 4)
-                    return;
+            if (values.Length != 4)
+                return;
 
-                deviceInfo.DeviceType = GetPairValue(values[0]);
-                deviceInfo.DeviceModel = GetPairValue(values[1]);
+            deviceInfo.DeviceType = GetPairValue(values[0]);
+            deviceInfo.DeviceModel = GetPairValue(values[1]);
 
-                if (deviceInfo.DeviceType != "android")
-                    deviceInfo.OsVersion = GetPairValue(values[2]);
+            if (deviceInfo.DeviceType != "android")
+                deviceInfo.OsVersion = GetPairValue(values[2]);
 
-                deviceInfo.ScreenResolution = GetPairValue(values[3]);
-            }
+            deviceInfo.ScreenResolution = GetPairValue(values[3]);
         }
 
         public static void ParseUserAgent(this DeviceInfo deviceInfo, string userAgent)
@@ -62,9 +62,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
                     return $"Mozilla/5.0 (Linux; Android {deviceInfo.OsVersion}; {deviceInfo.DeviceModel} Build/GNRTD)";
                 case "iOS":
                     return $"Mozilla/5.0 ({deviceInfo.DeviceType}; CPU OS {deviceInfo.OsVersion?.Replace('.', '_')} like Mac OS X)";
+                default:
+                    return string.Empty;
             }
-
-            return string.Empty;
         }
 
         private static string GetPairValue(string pair)

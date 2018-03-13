@@ -71,7 +71,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                 Source = model.Source,
                 Medium = model.Medium,
                 Campaign = model.Campaign,
-                Keyword = model.Keyword
+                Keyword = model.Keyword,
+                Content = model.Content
             };
             
             await _gaUserService.AddGaUserTrafficAsync(traffic);

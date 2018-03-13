@@ -22,6 +22,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services.CachedModels
         [Key(4)]
         [UsedImplicitly]
         public string Keyword { get; set; }
+        [Key(4)]
+        [UsedImplicitly]
+        public string Content { get; set; }
 
         [UsedImplicitly]
         public CachedGaTraffic()
@@ -35,6 +38,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services.CachedModels
             Medium = traffic.Medium;
             Campaign = traffic.Campaign;
             Keyword = traffic.Keyword;
+            Content = traffic.Content;
         }
     }
 }
