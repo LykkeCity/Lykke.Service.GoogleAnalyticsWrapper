@@ -230,9 +230,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             /// </param>
             /// <param name='model'>
             /// </param>
-            public static ErrorResponse TrackTransaction(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel))
+            public static ErrorResponse TrackCashout(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel))
             {
-                return operations.TrackTransactionAsync(model).GetAwaiter().GetResult();
+                return operations.TrackCashoutAsync(model).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -243,9 +243,35 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ErrorResponse> TrackTransactionAsync(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ErrorResponse> TrackCashoutAsync(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrackTransactionWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrackCashoutWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            public static ErrorResponse TrackTrade(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel))
+            {
+                return operations.TrackTradeAsync(model).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ErrorResponse> TrackTradeAsync(this IGoogleAnalyticsWrapperAPI operations, TransactionModel model = default(TransactionModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TrackTradeWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

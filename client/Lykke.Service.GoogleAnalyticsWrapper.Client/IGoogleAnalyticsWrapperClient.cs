@@ -56,5 +56,19 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
         /// <param name="model">track event model</param>
         /// <returns></returns>
         Task WithdrawDepositEventAsync(WithdrawDepositEventModel model);
+        
+        /// <summary>
+        /// Sends cash out fee as a transaction to GA
+        /// </summary>
+        /// <param name="model">cash out fee model</param>
+        /// <returns></returns>
+        Task TrackCashoutAsync(TransactionModel model);
+        
+        /// <summary>
+        /// Sends trade fee as a transaction to GA
+        /// </summary>
+        /// <param name="model">trade fee model</param>
+        /// <returns></returns>
+        Task TrackTradeAsync(TransactionModel model);
     }
 }

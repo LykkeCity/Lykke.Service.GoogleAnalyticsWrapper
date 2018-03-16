@@ -43,22 +43,27 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _log = log;
         }
 
-        public async Task SendEvent(TrackerInfo model, string category, string eventName, string eventValue = null)
+        public async Task SendEventAsync(TrackerInfo model, string category, string eventName, string eventValue = null)
         {
-            var eventInfo = EventInfo.Create(model);
-            eventInfo.EventCategory = GetCategoryName(category);
-            eventInfo.EventName = eventName;
-            eventInfo.EventValue = eventValue;
-            await SendEventAsync(eventInfo);
+            var eventCategory = GetCategoryName(category);
+            
+            var gaEvent = GaEvent.Create(model, eventCategory, eventName, eventValue);
+            await FillGaHitAsync(gaEvent);
+            
+            gaEvent.SessionControl = "start";
+            await SendDataAsync(gaEvent);
+
+            var gaPageView = GaPageView.Create(gaEvent, "end");
+            await SendDataAsync(gaPageView);
         }
 
-        public async Task SendWithdrawDepositEvent(WithdrawDepositInfo model)
+        public async Task SendWithdrawDepositEventAsync(WithdrawDepositInfo model)
         {
             BaseAssetSettings baseAsset = GetBaseAsset(model.AssetId);
 
             if (baseAsset == null)
             {
-                _log.WriteWarning(nameof(SendWithdrawDepositEvent), model.UserId, $"{model.AssetId} is not tracked. (asset is not in Fiat or Crypto lists)");
+                _log.WriteWarning(nameof(SendWithdrawDepositEventAsync), model.UserId, $"{model.AssetId} is not tracked. (asset is not in Fiat or Crypto lists)");
                 return;
             }
 
@@ -66,7 +71,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
 
             if (assetAmount == 0)
             {
-                _log.WriteWarning(nameof(SendWithdrawDepositEvent), model.UserId, $"Can't convert {model.Amount} {model.AssetId} to {baseAsset.AssetId} (Multiplier = {baseAsset.Multiplier})");
+                _log.WriteWarning(nameof(SendWithdrawDepositEventAsync), model.UserId, $"Can't convert {model.Amount} {model.AssetId} to {baseAsset.AssetId} (Multiplier = {baseAsset.Multiplier})");
                 return;
             }
             
@@ -80,34 +85,27 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             {
                 Ip = model.Ip,
                 UserAgent = model.UserAgent,
-                UserId = model.UserId
+                UserId = model.UserId,
+                ClientInfo = model.ClientInfo
             };
 
-            await SendEvent(trackerInfo, TrackerCategories.Wallet, walletEventName);
-            await SendEvent(trackerInfo, TrackerCategories.Wallet, eventName, Math.Round(Math.Abs(assetAmount * baseAsset.Multiplier)).ToString(CultureInfo.InvariantCulture));
+            await SendEventAsync(trackerInfo, TrackerCategories.Wallet, walletEventName);
+            await SendEventAsync(trackerInfo, TrackerCategories.Wallet, eventName, Math.Round(Math.Abs(assetAmount * baseAsset.Multiplier)).ToString(CultureInfo.InvariantCulture));
         }
 
-        public async Task SendTransaction(TransactionInfo model)
+        public async Task SendTransactionAsync(TransactionInfo model)
         {
             var amount = await GetAmountAsync(model.AssetId, model.Amount, _transactionAssetId);
 
             if (amount == 0)
             {
-                _log.WriteWarning(nameof(SendTransaction), model.UserId, $"Can't convert {model.Amount} {model.AssetId} to {_transactionAssetId}");
+                _log.WriteWarning(nameof(SendTransactionAsync), model.UserId, $"Can't convert {model.Amount} {model.AssetId} to {_transactionAssetId}");
                 return;
             }
             
-            var feeAmount = await GetAmountAsync(model.FeeAssetId, model.Fee, _transactionAssetId);
-
-            if (feeAmount == 0)
-            {
-                _log.WriteWarning(nameof(SendTransaction), model.UserId, $"Can't convert {model.Fee} {model.FeeAssetId} to {_transactionAssetId}");
-                return;
-            }
-            
-            string gaUserId = await _gaUserService.GetGaUserIdAsync(model.UserId);
-
-            var transaction = GaTransaction.Create(_gaSettings.ApiKey, model.Id, gaUserId, Math.Abs(amount), feeAmount, _transactionAssetId);
+            var transaction = GaTransaction.Create(model, Math.Abs(amount), _transactionAssetId);
+            await FillGaHitAsync(transaction);
+            transaction.Traffic = await _gaUserService.GetGaUserTrafficAsync(model.UserId);
             await SendDataAsync(transaction);
         }
 
@@ -172,22 +170,13 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 ? $"{(amount > 0 ? "Deposit" : "Withdraw")}{assetType}{(baseAsset.Multiplier == 1 ? string.Empty : $"_{multiplier:g2}")}_{baseAsset.AssetId}" 
                 : null;
         }
-
-        private async Task SendEventAsync(EventInfo model)
-        {
-            await FillEventInfoModel(model);
-            
-            var gaEvent = GaEvent.Create(model, _gaSettings.ApiKey, model.EventCategory, model.EventName, model.EventValue, "start");
-            await SendDataAsync(gaEvent);
-
-            var gaPageView = GaPageView.Create(model, _gaSettings.ApiKey, model.EventCategory, model.EventName, "end");
-            await SendDataAsync(gaPageView);
-        }
         
-        private async Task FillEventInfoModel(EventInfo model)
+        private async Task FillGaHitAsync<T>(T model) where T: GaBaseHit
         {
-            string gaUserId = await _gaUserService.GetGaUserIdAsync(model.ClientId);
-            model.ClientId = gaUserId;
+            string gaUserId = await _gaUserService.GetGaUserIdAsync(model.UserId);
+            model.UserId = gaUserId;
+            model.TrackingId = _gaSettings.ApiKey;
+            
             var deviceInfo = new DeviceInfo();
 
             deviceInfo.ParseUserAgent(model.UserAgent);

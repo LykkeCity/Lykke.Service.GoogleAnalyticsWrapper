@@ -108,5 +108,23 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
             if (response != null)
                 throw new Exception(response.ErrorMessage);
         }
+
+        /// <inheritdoc />
+        public async Task TrackCashoutAsync(TransactionModel model)
+        {
+            var response = await _service.TrackCashoutAsync(model);
+
+            if (response != null)
+                throw new Exception(response.ErrorMessage);
+        }
+
+        /// <inheritdoc />
+        public async Task TrackTradeAsync(TransactionModel model)
+        {
+            var response = await _service.TrackTradeAsync(model);
+
+            if (response != null)
+                throw new Exception(response.ErrorMessage);
+        }
     }
 }

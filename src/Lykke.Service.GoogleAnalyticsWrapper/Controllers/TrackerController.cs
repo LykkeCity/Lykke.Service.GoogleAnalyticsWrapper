@@ -35,7 +35,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
-            await _gaTrackerService.SendEvent(new TrackerInfo
+            await _gaTrackerService.SendEventAsync(new TrackerInfo
                 {
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
@@ -59,7 +59,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
-            await _gaTrackerService.SendEvent(new TrackerInfo
+            await _gaTrackerService.SendEventAsync(new TrackerInfo
                 {
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
@@ -83,7 +83,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
-            await _gaTrackerService.SendEvent(new TrackerInfo
+            await _gaTrackerService.SendEventAsync(new TrackerInfo
                 {
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
@@ -107,7 +107,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
-            await _gaTrackerService.SendWithdrawDepositEvent(new WithdrawDepositInfo{
+            await _gaTrackerService.SendWithdrawDepositEventAsync(new WithdrawDepositInfo{
                 Amount = model.Amount, 
                 AssetId = model.AssetId, 
                 UserId = model.UserId, 
@@ -119,11 +119,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
-        [HttpPost("trackTransaction")]
-        [SwaggerOperation("TrackTransaction")]
+        [HttpPost("trackCashout")]
+        [SwaggerOperation("TrackCashout")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> TrackTransaction([FromBody]TransactionModel model)
+        public async Task<IActionResult> TrackCashout([FromBody]TransactionModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessage());
@@ -131,13 +131,41 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
-            await _gaTrackerService.SendTransaction(new TransactionInfo{
+            await _gaTrackerService.SendTransactionAsync(new TransactionInfo{
                 Id = model.Id,
                 UserId = model.UserId, 
                 Amount = model.Amount, 
                 AssetId = model.AssetId, 
-                Fee = model.Fee,
-                FeeAssetId = model.FeeAssetId
+                Name = GaTransactionType.Cashout,
+                ClientInfo = model.ClientInfo,
+                UserAgent = model.UserAgent,
+                Ip = model.Ip
+            });
+            
+            return Ok();
+        }
+        
+        [HttpPost("trackTrade")]
+        [SwaggerOperation("TrackTrade")]
+        [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> TrackTrade([FromBody]TransactionModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessage());
+
+            if (!model.UserId.IsValidPartitionOrRowKey())
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
+
+            await _gaTrackerService.SendTransactionAsync(new TransactionInfo{
+                Id = model.Id,
+                UserId = model.UserId, 
+                Amount = model.Amount, 
+                AssetId = model.AssetId, 
+                Name = GaTransactionType.Trade,
+                ClientInfo = model.ClientInfo,
+                UserAgent = model.UserAgent,
+                Ip = model.Ip
             });
             
             return Ok();

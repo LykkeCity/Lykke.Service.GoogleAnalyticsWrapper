@@ -163,20 +163,6 @@
             A response object containing the response body and response headers.
             </return>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPI.ApiGoogleUserTestGetWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='customHeaders'>
-            Headers that will be added to request.
-            </param>
-            <param name='cancellationToken'>
-            The cancellation token.
-            </param>
-            <exception cref="T:Microsoft.Rest.HttpOperationException">
-            Thrown when the operation returned an invalid status code
-            </exception>
-            <return>
-            A response object containing the response body and response headers.
-            </return>
-        </member>
         <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
             <summary>
             Checks service is alive
@@ -273,7 +259,26 @@
             A response object containing the response body and response headers.
             </return>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPI.TrackTransactionWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPI.TrackCashoutWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='model'>
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPI.TrackTradeWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
             <param name='model'>
             </param>
             <param name='customHeaders'>
@@ -343,19 +348,6 @@
             The operations group for this extension method.
             </param>
             <param name='model'>
-            </param>
-            <param name='cancellationToken'>
-            The cancellation token.
-            </param>
-        </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.ApiGoogleUserTestGet(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI)">
-            <param name='operations'>
-            The operations group for this extension method.
-            </param>
-        </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.ApiGoogleUserTestGetAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,System.Threading.CancellationToken)">
-            <param name='operations'>
-            The operations group for this extension method.
             </param>
             <param name='cancellationToken'>
             The cancellation token.
@@ -448,14 +440,31 @@
             The cancellation token.
             </param>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackTransaction(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackCashout(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
             <param name='operations'>
             The operations group for this extension method.
             </param>
             <param name='model'>
             </param>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackTransactionAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Threading.CancellationToken)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackCashoutAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='model'>
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackTrade(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='model'>
+            </param>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.GoogleAnalyticsWrapperAPIExtensions.TrackTradeAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI,Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Threading.CancellationToken)">
             <param name='operations'>
             The operations group for this extension method.
             </param>
@@ -514,14 +523,6 @@
             The cancellation token.
             </param>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI.ApiGoogleUserTestGetWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='customHeaders'>
-            The headers that will be added to request.
-            </param>
-            <param name='cancellationToken'>
-            The cancellation token.
-            </param>
-        </member>
         <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
             <summary>
             Checks service is alive
@@ -573,7 +574,17 @@
             The cancellation token.
             </param>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI.TrackTransactionWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI.TrackCashoutWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='model'>
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.IGoogleAnalyticsWrapperAPI.TrackTradeWithHttpMessagesAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
             <param name='model'>
             </param>
             <param name='customHeaders'>
@@ -606,7 +617,7 @@
             Initializes a new instance of the GaTraffic class.
             </summary>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTraffic.#ctor(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTraffic.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Initializes a new instance of the GaTraffic class.
             </summary>
@@ -631,12 +642,16 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTraffic.Content">
+            <summary>
+            </summary>
+        </member>
         <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTrafficModel.#ctor">
             <summary>
             Initializes a new instance of the GaTrafficModel class.
             </summary>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTrafficModel.#ctor(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTrafficModel.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Initializes a new instance of the GaTrafficModel class.
             </summary>
@@ -658,6 +673,10 @@
             </summary>
         </member>
         <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTrafficModel.Keyword">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.GaTrafficModel.Content">
             <summary>
             </summary>
         </member>
@@ -748,16 +767,12 @@
             Initializes a new instance of the TransactionModel class.
             </summary>
         </member>
-        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.#ctor(System.Double,System.Double,System.String,System.String,System.String,System.String)">
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.#ctor(System.Double,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Initializes a new instance of the TransactionModel class.
             </summary>
         </member>
         <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.Id">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.UserId">
             <summary>
             </summary>
         </member>
@@ -769,11 +784,19 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.Fee">
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.UserId">
             <summary>
             </summary>
         </member>
-        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.FeeAssetId">
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.Ip">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.UserAgent">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel.ClientInfo">
             <summary>
             </summary>
         </member>
@@ -860,6 +883,12 @@
         <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.GoogleAnalyticsWrapperClient.WithdrawDepositEventAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.WithdrawDepositEventModel)">
             <inheritdoc />
         </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.GoogleAnalyticsWrapperClient.TrackCashoutAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+            <inheritdoc />
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.GoogleAnalyticsWrapperClient.TrackTradeAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+            <inheritdoc />
+        </member>
         <member name="T:Lykke.Service.GoogleAnalyticsWrapper.Client.IGoogleAnalyticsWrapperClient">
             <summary>
             Client for google analytics wrapper service
@@ -912,6 +941,20 @@
             Sends event about deposit/withdraw to GA
             </summary>
             <param name="model">track event model</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.IGoogleAnalyticsWrapperClient.TrackCashoutAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+            <summary>
+            Sends cash out fee as a transaction to GA
+            </summary>
+            <param name="model">cash out fee model</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.GoogleAnalyticsWrapper.Client.IGoogleAnalyticsWrapperClient.TrackTradeAsync(Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models.TransactionModel)">
+            <summary>
+            Sends trade fee as a transaction to GA
+            </summary>
+            <param name="model">trade fee model</param>
             <returns></returns>
         </member>
     </members>

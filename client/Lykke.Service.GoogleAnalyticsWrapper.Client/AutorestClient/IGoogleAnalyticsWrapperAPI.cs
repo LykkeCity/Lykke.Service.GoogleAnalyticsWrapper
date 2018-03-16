@@ -123,7 +123,17 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ErrorResponse>> TrackTransactionWithHttpMessagesAsync(TransactionModel model = default(TransactionModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ErrorResponse>> TrackCashoutWithHttpMessagesAsync(TransactionModel model = default(TransactionModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='model'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ErrorResponse>> TrackTradeWithHttpMessagesAsync(TransactionModel model = default(TransactionModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

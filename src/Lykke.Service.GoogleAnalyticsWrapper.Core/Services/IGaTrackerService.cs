@@ -5,8 +5,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Services
 {
     public interface IGaTrackerService
     {
-        Task SendEvent(TrackerInfo model, string category, string eventName, string eventValue = null);
-        Task SendWithdrawDepositEvent(WithdrawDepositInfo model);
-        Task SendTransaction(TransactionInfo model);
+        Task SendEventAsync(TrackerInfo model, string category, string eventName, string eventValue = null);
+        Task SendWithdrawDepositEventAsync(WithdrawDepositInfo model);
+        Task SendTransactionAsync(TransactionInfo model);
     }
 }

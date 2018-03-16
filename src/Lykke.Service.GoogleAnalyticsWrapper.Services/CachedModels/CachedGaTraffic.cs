@@ -22,7 +22,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services.CachedModels
         [Key(4)]
         [UsedImplicitly]
         public string Keyword { get; set; }
-        [Key(4)]
+        [Key(5)]
         [UsedImplicitly]
         public string Content { get; set; }
 

@@ -2,25 +2,26 @@
 
 namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
-    public class GaPageView : GaBaseEvent
+    public class GaPageView : GaBaseHit
     {
         public string PageName { get; set; }
         public string PageTitle { get; set; }
 
-        public static GaPageView Create(EventInfo src, string trackingId, string category, string action, string sessionControl = "ignore")
+        public static GaPageView Create(GaEvent src, string sessionControl = "ignore")
         {
             return new GaPageView
             {
-                TrackingId = trackingId,
+                TrackingId = src.TrackingId,
                 Type = GaHitType.GaPageView,
-                PageName = WebUtility.UrlEncode($"{category}/{action}"),
-                PageTitle = action,
-                UserId = src.ClientId,
+                PageName = WebUtility.UrlEncode($"{src.EventCategory}/{src.EventAction}"),
+                PageTitle = src.EventAction,
+                UserId = src.UserId,
                 UserAgent = src.UserAgent ?? string.Empty,
                 ScreenResolution = src.ScreenResolution ?? string.Empty,
                 SessionControl = sessionControl,
                 Ip = src.Ip ?? string.Empty,
-                AppVersion = src.AppVersion
+                AppVersion = src.AppVersion,
+                ClientInfo = src.ClientInfo
             };
         }
 
@@ -36,6 +37,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                 uid = UserId,
                 sr = ScreenResolution,
                 ip = Ip,
+                ua = UserAgent,
                 av = AppVersion,
                 an = AppName,
                 sc = SessionControl

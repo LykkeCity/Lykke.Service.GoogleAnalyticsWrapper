@@ -5,19 +5,22 @@
         public string Id { get; set; }
         public string AssetId { get; set; }
         public double Amount { get; set; }
-        public double Fee { get; set; }
+        public GaTraffic.GaTraffic Traffic { get; set; }
+        public string Name { get; set; }
         
-        public static GaTransaction Create(string trackingId, string id, string userId, double amount, double fee, string assetId)
+        public static GaTransaction Create(TransactionInfo transaction, double amount, string assetId)
         {
             return new GaTransaction
             {
-                TrackingId = trackingId,
                 Type = GaHitType.GaTransaction,
-                UserId = userId,
-                Id = id,
+                UserId = transaction.UserId,
+                Id = transaction.Id,
                 Amount = amount,
-                Fee = fee,
-                AssetId = assetId
+                AssetId = assetId,
+                Name = transaction.Name,
+                UserAgent = transaction.UserAgent,
+                ClientInfo = transaction.ClientInfo,
+                Ip = transaction.Ip
             };
         }
 
@@ -31,8 +34,14 @@
                 uid = UserId,
                 ti = Id,
                 tr = Amount,
-                tt = Fee,
-                cu = AssetId
+                ta = Name,
+                cu = AssetId,
+                cs = Traffic?.Source,
+                cm = Traffic?.Medium,
+                cn = Traffic?.Campaign,
+                ck = Traffic?.Keyword,
+                ip = Ip,
+                ua = UserAgent
             };
         }
     }

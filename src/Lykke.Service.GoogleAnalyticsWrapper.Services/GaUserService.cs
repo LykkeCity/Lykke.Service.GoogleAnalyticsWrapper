@@ -60,12 +60,12 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                     var traffic = await _trafficRepository.GetAsync(clientId);
 
                     return traffic == null
-                        ? null
+                        ? new CachedGaTraffic(GaTraffic.CreateDefault(clientId))
                         : new CachedGaTraffic(traffic);
                 });
 
             return cachedValue == null 
-                ? null
+                ? GaTraffic.CreateDefault(clientId)
                 : new GaTraffic
                 {
                     ClientId = cachedValue.ClientId,

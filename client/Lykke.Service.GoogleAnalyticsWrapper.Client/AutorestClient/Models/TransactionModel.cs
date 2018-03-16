@@ -22,14 +22,15 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the TransactionModel class.
         /// </summary>
-        public TransactionModel(double amount, double fee, string id = default(string), string userId = default(string), string assetId = default(string), string feeAssetId = default(string))
+        public TransactionModel(double amount, string id = default(string), string assetId = default(string), string userId = default(string), string ip = default(string), string userAgent = default(string), string clientInfo = default(string))
         {
             Id = id;
-            UserId = userId;
             Amount = amount;
             AssetId = assetId;
-            Fee = fee;
-            FeeAssetId = feeAssetId;
+            UserId = userId;
+            Ip = ip;
+            UserAgent = userAgent;
+            ClientInfo = clientInfo;
             CustomInit();
         }
 
@@ -45,11 +46,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "UserId")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "Amount")]
         public double Amount { get; set; }
 
@@ -60,13 +56,23 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Fee")]
-        public double Fee { get; set; }
+        [JsonProperty(PropertyName = "UserId")]
+        public string UserId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "FeeAssetId")]
-        public string FeeAssetId { get; set; }
+        [JsonProperty(PropertyName = "Ip")]
+        public string Ip { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "UserAgent")]
+        public string UserAgent { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "ClientInfo")]
+        public string ClientInfo { get; set; }
 
         /// <summary>
         /// Validate the object.

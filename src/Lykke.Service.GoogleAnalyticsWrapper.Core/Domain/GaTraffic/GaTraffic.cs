@@ -8,5 +8,14 @@
         public string Campaign { get; set; }
         public string Keyword { get; set; }
         public string Content { get; set; }
+
+        public static GaTraffic CreateDefault(string clientId)
+        {
+            return new GaTraffic
+            {
+                ClientId = clientId,
+                Source = "direct"
+            };
+        }
     }
 }
