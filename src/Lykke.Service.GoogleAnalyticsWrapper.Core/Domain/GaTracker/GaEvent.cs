@@ -14,8 +14,9 @@
                 EventCategory = category,
                 EventAction = action,
                 EventValue = value,
-                UserId = src.UserAgent,
+                UserId = src.UserId,
                 UserAgent = src.UserAgent,
+                ClientInfo = src.ClientInfo,
                 Ip = src.Ip
             };
         }
