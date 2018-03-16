@@ -9,12 +9,19 @@
         public string Keyword { get; set; }
         public string Content { get; set; }
 
+        private const string None = "(none)";
+        private const string DirectSource = "(direct)";
+
         public static GaTraffic CreateDefault(string clientId)
         {
             return new GaTraffic
             {
                 ClientId = clientId,
-                Source = "direct"
+                Source = DirectSource,
+                Medium = None,
+                Campaign = None,
+                Keyword = None,
+                Content = None
             };
         }
     }
