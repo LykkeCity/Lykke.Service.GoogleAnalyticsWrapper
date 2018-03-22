@@ -23,6 +23,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             _gaTrackerService = gaTrackerService;
         }
         
+        /// <summary>
+        /// Tracks user registration
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("userRegisteredEvent")]
         [SwaggerOperation("UserRegisteredEvent")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
@@ -47,6 +52,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Tracks kyc completed
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("kycCompletedEvent")]
         [SwaggerOperation("KycCompletedEvent")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
@@ -71,6 +81,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Tracks margin order change
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("mtOrderCreatedEvent")]
         [SwaggerOperation("MtOrderCreatedEvent")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
@@ -95,6 +110,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Tracks withdraw / deposit
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("withdrawDepositEvent")]
         [SwaggerOperation("WithdrawDepositEvent")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
@@ -119,6 +139,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Tracks cashout fee as a transaction in GA
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("trackCashout")]
         [SwaggerOperation("TrackCashout")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
@@ -145,6 +170,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Tracks trade fee as a transaction in GA
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("trackTrade")]
         [SwaggerOperation("TrackTrade")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
