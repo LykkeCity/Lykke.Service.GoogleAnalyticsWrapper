@@ -23,6 +23,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             _gaUserService = gaUserService;
         }
         
+        /// <summary>
+        /// Gets gaUserId by client id
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         [HttpGet("getGaUserId/{clientId}")]
         [SwaggerOperation("GetGaUserId")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
@@ -41,6 +46,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Json(gaUserId);
         }
         
+        /// <summary>
+        /// Gets information about client traffic
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         [HttpGet("getGaUserTraffic/{clientId}")]
         [SwaggerOperation("GetGaUserTraffic")]
         [ProducesResponseType(typeof(GaTraffic), (int) HttpStatusCode.OK)]
@@ -56,6 +66,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             return Ok(traffic);
         }
         
+        /// <summary>
+        /// Adds information about client traffic
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("addGaUserTraffic")]
         [SwaggerOperation("AddGaUserTraffic")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]

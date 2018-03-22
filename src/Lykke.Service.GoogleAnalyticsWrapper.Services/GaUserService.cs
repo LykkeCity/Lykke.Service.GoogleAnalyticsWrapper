@@ -29,40 +29,17 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         
         public async Task<string> GetGaUserIdAsync(string clientId)
         {
-            var cachedValue = await _cache.TryGetFromCacheAsync(
+            var cachedValue = await _cache.TryGetOrAddAsync(
                 GetUserIdKey(clientId),
-                async () =>
-                {
-                    var cachedGaUserId = new CachedGaUserId();
-                    var trackerUser = await _trackerUserRepository.GetGaUserAsync(clientId);
-
-                    if (trackerUser == null)
-                    {
-                        cachedGaUserId.GaUserId = Guid.NewGuid().ToString();
-                        await _trackerUserRepository.AddAsync(new GaUser{ClientId = clientId, TrackerUserId = cachedGaUserId.GaUserId});
-                    }
-                    else
-                    {
-                        cachedGaUserId.GaUserId = trackerUser.TrackerUserId;
-                    }
-                    
-                    return cachedGaUserId;
-                });
+                async () => await GetCachedUserIdAsync(clientId));
 
             return cachedValue?.GaUserId;
         }
         
         public async Task<GaTraffic> GetGaUserTrafficAsync(string clientId)
         {
-            var cachedValue = await _cache.TryGetFromCacheAsync(
-                GetTrafficKey(clientId), async () =>
-                {
-                    var traffic = await _trafficRepository.GetAsync(clientId);
-
-                    return traffic == null
-                        ? new CachedGaTraffic(GaTraffic.CreateDefault(clientId))
-                        : new CachedGaTraffic(traffic);
-                });
+            var cachedValue = await _cache.TryGetOrAddAsync(
+                GetTrafficKey(clientId), async () => await GetTrafficAsync(clientId));
 
             return cachedValue == null 
                 ? GaTraffic.CreateDefault(clientId)
@@ -82,6 +59,33 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             await _trafficRepository.AddAsync(traffic);
             var value = MessagePackSerializer.Serialize(new CachedGaTraffic(traffic));
             await _cache.SetAsync(GetTrafficKey(traffic.ClientId), value);
+        }
+
+        private async Task<CachedGaUserId> GetCachedUserIdAsync(string clientId)
+        {
+            var cachedGaUserId = new CachedGaUserId();
+            var trackerUser = await _trackerUserRepository.GetGaUserAsync(clientId);
+
+            if (trackerUser == null)
+            {
+                cachedGaUserId.GaUserId = Guid.NewGuid().ToString();
+                await _trackerUserRepository.AddAsync(new GaUser{ClientId = clientId, TrackerUserId = cachedGaUserId.GaUserId});
+            }
+            else
+            {
+                cachedGaUserId.GaUserId = trackerUser.TrackerUserId;
+            }
+                    
+            return cachedGaUserId;
+        }
+
+        private async Task<CachedGaTraffic> GetTrafficAsync(string clientId)
+        {
+            var traffic = await _trafficRepository.GetAsync(clientId);
+
+            return traffic == null
+                ? new CachedGaTraffic(GaTraffic.CreateDefault(clientId))
+                : new CachedGaTraffic(traffic);
         }
         
         private static string GetUserIdKey(string clientId) => $"userId:{clientId}";

@@ -13,10 +13,10 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.GaTraffic
             _tableStorage = tableStorage;
         }
         
-        public async Task AddAsync(IGaTraffic model)
+        public  Task AddAsync(IGaTraffic model)
         {
             var entity = GaTrafficEntity.Create(model);
-            await _tableStorage.InsertOrMergeAsync(entity);
+            return _tableStorage.InsertOrMergeAsync(entity);
         }
 
         public async Task<IGaTraffic> GetAsync(string clientId)

@@ -171,7 +171,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 : null;
         }
         
-        private async Task FillGaHitAsync<T>(T model) where T: GaBaseHit
+        private async Task FillGaHitAsync(GaBaseHit model)
         {
             string gaUserId = await _gaUserService.GetGaUserIdAsync(model.UserId);
             model.UserId = gaUserId;
@@ -187,7 +187,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             model.AppVersion = deviceInfo.AppVersion;
         }
         
-        private async Task SendDataAsync<T>(T model) where T: GaBaseHit
+        private async Task SendDataAsync(GaBaseHit model)
         {
             var data = model.Transform();
 

@@ -34,7 +34,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
         /// <param name="settings"></param>
         public static void RegisterGoogleAnalyticsWrapperClient(this ContainerBuilder builder, GoogleAnalyticsWrapperServiceClientSettings settings)
         {
-            builder.RegisterGoogleAnalyticsWrapperClient(settings?.ServiceUrl);
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+            builder.RegisterGoogleAnalyticsWrapperClient(settings.ServiceUrl);
         }
     }
 }

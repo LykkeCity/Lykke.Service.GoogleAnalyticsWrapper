@@ -24,7 +24,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
 
         }
 
-        public static async Task<T> TryGetFromCacheAsync<T>(this IDistributedCache cache, string key, Func<Task<T>> getRecordFunc, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null)
+        public static async Task<T> TryGetOrAddAsync<T>(this IDistributedCache cache, string key, Func<Task<T>> getRecordFunc, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null)
             where T : class
         {
             var semaphore = await GetLockAsync(key);

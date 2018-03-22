@@ -30,7 +30,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
         {
             var values = ParseUserAgent(userAgent);
 
-            if (!string.IsNullOrEmpty(userAgent) && values.Keys.Count == 0)
+            if (!string.IsNullOrEmpty(userAgent) && !values.Keys.Any())
             {
                 deviceInfo.RawUserAgent = userAgent;
                 return;
@@ -83,7 +83,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
             return value?.Replace("<", string.Empty).Replace(">", string.Empty);
         }
 
-        private static IDictionary<string, string> ParseUserAgent(string userAgent)
+        private static IReadOnlyDictionary<string, string> ParseUserAgent(string userAgent)
         {
             if (!string.IsNullOrEmpty(userAgent))
                 return userAgent.Split(';').Select(parameter => parameter.Split('='))

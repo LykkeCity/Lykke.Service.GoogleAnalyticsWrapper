@@ -40,10 +40,12 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Modules
                 .SingleInstance();
 
             builder.RegisterType<StartupManager>()
-                .As<IStartupManager>();
+                .As<IStartupManager>()
+                .SingleInstance();
 
             builder.RegisterType<ShutdownManager>()
-                .As<IShutdownManager>();
+                .As<IShutdownManager>()
+                .SingleInstance();
 
             builder.Register(c => new RedisCache(new RedisCacheOptions
             {

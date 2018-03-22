@@ -4,7 +4,6 @@ using Lykke.Common.Api.Contract.Responses;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using IsAliveResponse = Lykke.Service.GoogleAnalyticsWrapper.Models.IsAliveResponse;
 
 namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
 {
