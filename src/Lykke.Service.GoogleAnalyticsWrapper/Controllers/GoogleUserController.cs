@@ -1,0 +1,98 @@
+﻿using System.Net;
+using System.Threading.Tasks;
+using Common;
+using Lykke.Common.Api.Contract.Responses;
+using Lykke.Common.ApiLibrary.Extensions;
+using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic;
+using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
+using Lykke.Service.GoogleAnalyticsWrapper.Models;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
+{
+    [Route("api/[controller]")]
+    public class GoogleUserController : Controller
+    {
+        private readonly IGaUserService _gaUserService;
+
+        public GoogleUserController(
+            IGaUserService gaUserService
+            )
+        {
+            _gaUserService = gaUserService;
+        }
+        
+        /// <summary>
+        /// Gets gaUserId by client id
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        [HttpGet("getGaUserId/{clientId}")]
+        [SwaggerOperation("GetGaUserId")]
+        [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(void), (int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetGaUserId(string clientId)
+        {
+            if (!clientId.IsGuid())
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(clientId)} value"));
+            
+            var gaUserId = await _gaUserService.GetGaUserIdAsync(clientId);
+
+            if (gaUserId == null)
+                return NotFound();
+            
+            return Json(gaUserId);
+        }
+        
+        /// <summary>
+        /// Gets information about client traffic
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        [HttpGet("getGaUserTraffic/{clientId}")]
+        [SwaggerOperation("GetGaUserTraffic")]
+        [ProducesResponseType(typeof(GaTraffic), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(GaTraffic), (int) HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetGaUserTraffic(string clientId)
+        {
+            if (!clientId.IsGuid())
+                return BadRequest(ErrorResponse.Create($"Invalid {nameof(clientId)} value"));
+            
+            var traffic = await _gaUserService.GetGaUserTrafficAsync(clientId);
+
+            return Ok(traffic);
+        }
+        
+        /// <summary>
+        /// Adds information about client traffic
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("addGaUserTraffic")]
+        [SwaggerOperation("AddGaUserTraffic")]
+        [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> AddGaUserTraffic([FromBody]GaTrafficModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ErrorResponse.Create(ModelState.GetErrorMessage()));
+
+            var traffic = new GaTraffic
+            {
+                ClientId = model.ClientId,
+                Source = model.Source,
+                Medium = model.Medium,
+                Campaign = model.Campaign,
+                Keyword = model.Keyword,
+                Content = model.Content
+            };
+            
+            await _gaUserService.AddGaUserTrafficAsync(traffic);
+
+            return Ok();
+        }
+    }
+}
