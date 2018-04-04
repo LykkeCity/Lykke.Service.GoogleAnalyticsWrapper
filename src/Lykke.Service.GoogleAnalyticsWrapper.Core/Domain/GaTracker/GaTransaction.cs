@@ -31,16 +31,19 @@
                 v = Version,
                 tid = TrackingId,
                 t = Type,
+                cid = Cid,
                 uid = UserId,
                 ti = Id,
+                ta = GaParamValue.AffiliateLykke,
                 tr = Amount,
-                ta = Name,
+                ts = 0,
+                tt = 0,
                 cu = AssetId,
                 cs = Traffic?.Source,
                 cm = Traffic?.Medium,
                 cn = Traffic?.Campaign,
                 ck = Traffic?.Keyword,
-                ip = Ip,
+                uip = Ip,
                 ua = UserAgent
             };
         }

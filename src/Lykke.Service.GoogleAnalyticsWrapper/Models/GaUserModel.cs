@@ -6,7 +6,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Models
     {
         [Required]
         public string ClientId { get; set; }
-        [Required]
-        public string GaUserId { get; set; }
+        public string Cid { get; set; }
     }
 }

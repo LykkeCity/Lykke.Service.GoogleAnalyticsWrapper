@@ -4,5 +4,6 @@
     {
         string ClientId { get; }
         string TrackerUserId { get; }
+        string Cid { get; }
     }
 }

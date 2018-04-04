@@ -15,6 +15,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
     /// </summary>
     public static partial class GoogleAnalyticsWrapperAPIExtensions
     {
+            /// <summary>
+            /// Gets gaUserId by client id
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -25,6 +28,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.GetGaUserIdAsync(clientId).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets gaUserId by client id
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -41,6 +47,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Gets information about client traffic
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -51,6 +60,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.GetGaUserTrafficAsync(clientId).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets information about client traffic
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -67,6 +79,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Adds client traffic
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -77,6 +92,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.AddGaUserTrafficAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Adds client traffic
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -88,6 +106,38 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             public static async Task<ErrorResponse> AddGaUserTrafficAsync(this IGoogleAnalyticsWrapperAPI operations, GaTrafficModel model = default(GaTrafficModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddGaUserTrafficWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Adds client GA cid
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            public static ErrorResponse AddGaUserCid(this IGoogleAnalyticsWrapperAPI operations, GaUserModel model = default(GaUserModel))
+            {
+                return operations.AddGaUserCidAsync(model).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Adds client GA cid
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='model'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ErrorResponse> AddGaUserCidAsync(this IGoogleAnalyticsWrapperAPI operations, GaUserModel model = default(GaUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddGaUserCidWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -121,6 +171,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks user registration
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -131,6 +184,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.UserRegisteredEventAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks user registration
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -147,6 +203,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks kyc completed
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -157,6 +216,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.KycCompletedEventAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks kyc completed
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -173,6 +235,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks margin order change
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -183,6 +248,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.MtOrderCreatedEventAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks margin order change
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -199,6 +267,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks withdraw / deposit
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -209,6 +280,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.WithdrawDepositEventAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks withdraw / deposit
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -225,6 +299,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks cashout fee as a transaction in GA
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -235,6 +312,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.TrackCashoutAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks cashout fee as a transaction in GA
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -251,6 +331,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Tracks trade fee as a transaction in GA
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -261,6 +344,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
                 return operations.TrackTradeAsync(model).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Tracks trade fee as a transaction in GA
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

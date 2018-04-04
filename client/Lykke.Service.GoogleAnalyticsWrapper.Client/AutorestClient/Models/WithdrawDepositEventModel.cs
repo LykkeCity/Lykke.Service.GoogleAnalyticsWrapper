@@ -22,7 +22,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the WithdrawDepositEventModel class.
         /// </summary>
-        public WithdrawDepositEventModel(double amount, string assetId = default(string), string userId = default(string), string ip = default(string), string userAgent = default(string), string clientInfo = default(string))
+        public WithdrawDepositEventModel(double amount, string assetId = default(string), string userId = default(string), string ip = default(string), string userAgent = default(string), string clientInfo = default(string), System.DateTime? createdAt = default(System.DateTime?))
         {
             Amount = amount;
             AssetId = assetId;
@@ -30,6 +30,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
             Ip = ip;
             UserAgent = userAgent;
             ClientInfo = clientInfo;
+            CreatedAt = createdAt;
             CustomInit();
         }
 
@@ -67,6 +68,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// </summary>
         [JsonProperty(PropertyName = "ClientInfo")]
         public string ClientInfo { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "CreatedAt")]
+        public System.DateTime? CreatedAt { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -45,7 +45,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
                     ClientInfo = model.ClientInfo,
-                    Ip = model.Ip
+                    Ip = model.Ip,
+                    CreatedAt = model.CreatedAt
                 },
                 TrackerCategories.Users, TrackerEvents.UserRegistered);
             

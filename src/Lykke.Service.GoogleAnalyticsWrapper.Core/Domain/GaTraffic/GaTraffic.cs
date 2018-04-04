@@ -1,4 +1,6 @@
-﻿namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic
+﻿using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker;
+
+namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic
 {
     public class GaTraffic : IGaTraffic
     {
@@ -9,19 +11,16 @@
         public string Keyword { get; set; }
         public string Content { get; set; }
 
-        private const string None = "(none)";
-        private const string DirectSource = "(direct)";
-
         public static GaTraffic CreateDefault(string clientId)
         {
             return new GaTraffic
             {
                 ClientId = clientId,
-                Source = DirectSource,
-                Medium = None,
-                Campaign = None,
-                Keyword = None,
-                Content = None
+                Source = GaParamValue.Direct,
+                Medium = GaParamValue.None,
+                Campaign = GaParamValue.None,
+                Keyword = GaParamValue.None,
+                Content = GaParamValue.None
             };
         }
     }

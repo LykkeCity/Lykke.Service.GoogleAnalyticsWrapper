@@ -74,6 +74,15 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
         }
 
         /// <inheritdoc />
+        public async Task AddGaCidAsync(GaUserModel model)
+        {
+            var response = await _service.AddGaUserCidAsync(model);
+
+            if (response != null)
+                throw new Exception(response.ErrorMessage);
+        }
+
+        /// <inheritdoc />
         public async Task UserRegisteredEventAsync(TrackEventModel model)
         {
             var response = await _service.UserRegisteredEventAsync(model);

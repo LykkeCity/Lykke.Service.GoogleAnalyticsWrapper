@@ -1,10 +1,13 @@
-﻿namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
+﻿using System;
+
+namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
     public class GaEvent : GaBaseHit
     {
         public string EventCategory { get; set; }
         public string EventAction { get; set; }
         public string EventValue { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         public static GaEvent Create(TrackerInfo src, string category, string action, string value)
         {
@@ -17,12 +20,34 @@
                 UserId = src.UserId,
                 UserAgent = src.UserAgent,
                 ClientInfo = src.ClientInfo,
-                Ip = src.Ip
+                Ip = src.Ip,
+                CreatedAt = src.CreatedAt
             };
         }
 
         public override object Transform()
         {
+            if (CreatedAt.HasValue && EventAction == TrackerEvents.UserRegistered)
+            {
+                return new
+                {
+                    v = Version,
+                    tid = TrackingId,
+                    t = Type,
+                    ec = EventCategory,
+                    ea = EventAction,
+                    ev = EventValue,
+                    qt = (DateTime.UtcNow - CreatedAt.Value).TotalMilliseconds,
+                    cid = Cid,
+                    uid = UserId,
+                    sr = ScreenResolution,
+                    uip = Ip,
+                    ua = UserAgent,
+                    av = AppVersion,
+                    an = AppName
+                };
+            }
+
             return new
             {
                 v = Version,
@@ -31,13 +56,17 @@
                 ec = EventCategory,
                 ea = EventAction,
                 ev = EventValue,
+                cid = Cid,
                 uid = UserId,
                 sr = ScreenResolution,
-                ip = Ip,
+                uip = Ip,
                 ua = UserAgent,
                 av = AppVersion,
                 an = AppName,
-                sc = SessionControl
+                cs = GaParamValue.Undefined,
+                cm = GaParamValue.None,
+                cn = GaParamValue.None,
+                ck = GaParamValue.None
             };
         }
     }
