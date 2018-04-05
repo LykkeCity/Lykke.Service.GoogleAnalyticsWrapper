@@ -6,8 +6,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Services
 {
     public interface IGaUserService
     {
-        Task<GaUser> GetGaUserAsync(string clientId);
-        Task AddGaUserAsync(string clientId, string cid);
+        Task<GaUser> GetGaUserAsync(string clientId, string cid = null);
         Task<GaTraffic> GetGaUserTrafficAsync(string clientId);
         Task AddGaUserTrafficAsync(IGaTraffic traffic);
     }

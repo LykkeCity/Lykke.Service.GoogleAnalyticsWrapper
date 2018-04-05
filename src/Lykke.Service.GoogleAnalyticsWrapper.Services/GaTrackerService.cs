@@ -101,7 +101,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             
             var transaction = GaTransaction.Create(model, Math.Abs(amount), _transactionAssetId);
             await FillGaHitAsync(transaction);
-            transaction.Traffic = await _gaUserService.GetGaUserTrafficAsync(model.UserId);
             await SendDataAsync(transaction);
             
             var item = GaItem.Create(transaction);
@@ -172,10 +171,12 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         
         private async Task FillGaHitAsync(GaBaseHit model)
         {
-            GaUser gaUser = await _gaUserService.GetGaUserAsync(model.UserId);
+            GaUser gaUser = await _gaUserService.GetGaUserAsync(model.UserId, model.Cid);
             model.UserId = gaUser.TrackerUserId;
             model.Cid = gaUser.Cid;
             model.TrackingId = _gaSettings.ApiKey;
+            
+            model.Traffic = await _gaUserService.GetGaUserTrafficAsync(gaUser.ClientId);
             
             var deviceInfo = new DeviceInfo();
 

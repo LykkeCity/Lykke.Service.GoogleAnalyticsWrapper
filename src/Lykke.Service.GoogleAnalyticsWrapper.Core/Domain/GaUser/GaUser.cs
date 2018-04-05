@@ -18,13 +18,13 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaUser
             };
         }
 
-        public static GaUser CreateNew(string clientId)
+        public static GaUser CreateNew(string clientId, string cid)
         {
             return new GaUser
             {
                 ClientId = clientId,
                 TrackerUserId = GenerateNewUserId(),
-                Cid = GenerateNewCid()
+                Cid = string.IsNullOrEmpty(cid) ? GenerateNewCid() : cid
             };
         }
 

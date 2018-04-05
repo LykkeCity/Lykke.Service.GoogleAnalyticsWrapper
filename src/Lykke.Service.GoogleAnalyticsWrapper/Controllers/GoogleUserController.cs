@@ -1,11 +1,9 @@
 ﻿using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common;
 using Lykke.Common.Api.Contract.Responses;
 using Lykke.Common.ApiLibrary.Extensions;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic;
-using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaUser;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Lykke.Service.GoogleAnalyticsWrapper.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -93,33 +91,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             };
             
             await _gaUserService.AddGaUserTrafficAsync(traffic);
-
-            return Ok();
-        }
-        
-        /// <summary>
-        /// Adds client GA cid
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost("addGaUserCid")]
-        [SwaggerOperation("AddGaUserCid")]
-        [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> AddGaUserCid([FromBody]GaUserModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ErrorResponse.Create(ModelState.GetErrorMessage()));
-
-            if (!model.ClientId.IsGuid())
-                return BadRequest(ErrorResponse.Create($"{nameof(model.ClientId)} invalid"));
-
-            if (string.IsNullOrEmpty(model.Cid))
-                model.Cid = GaUser.GenerateNewCid();
-            else if (!Regex.IsMatch(model.Cid, "\\d{9}\\.\\d{9}"))
-                return BadRequest(ErrorResponse.Create($"{nameof(model.Cid)} invalid"));
-
-            await _gaUserService.AddGaUserAsync(model.ClientId, model.Cid);
 
             return Ok();
         }

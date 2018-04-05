@@ -13,6 +13,7 @@
         public string AppVersion { get; set; }
         public string AppName => "LykkeWallet";
         public string Ip { get; set; }
+        public GaTraffic.GaTraffic Traffic { get; set; }
         
         public abstract object Transform();
     }

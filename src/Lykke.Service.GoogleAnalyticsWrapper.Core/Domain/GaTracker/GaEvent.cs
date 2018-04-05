@@ -21,7 +21,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                 UserAgent = src.UserAgent,
                 ClientInfo = src.ClientInfo,
                 Ip = src.Ip,
-                CreatedAt = src.CreatedAt
+                CreatedAt = src.CreatedAt,
+                Cid = src.Cid
             };
         }
 
@@ -37,7 +38,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                     ec = EventCategory,
                     ea = EventAction,
                     ev = EventValue,
-                    qt = (DateTime.UtcNow - CreatedAt.Value).TotalMilliseconds,
+                    qt = (DateTime.UtcNow - CreatedAt.Value).Milliseconds,
                     cid = Cid,
                     uid = UserId,
                     sr = ScreenResolution,

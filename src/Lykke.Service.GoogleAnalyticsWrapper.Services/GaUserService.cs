@@ -28,11 +28,11 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _trafficRepository = trafficRepository;
         }
         
-        public async Task<GaUser> GetGaUserAsync(string clientId)
+        public async Task<GaUser> GetGaUserAsync(string clientId, string cid = null)
         {
             var cachedValue = await _cache.TryGetOrAddAsync(
                 GetUserInfoKey(clientId),
-                async () => await GetCachedUserIdAsync(clientId));
+                async () => await GetCachedUserIdAsync(clientId, cid));
 
             return new GaUser
             {
@@ -92,14 +92,14 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             await _cache.SetAsync(GetTrafficKey(traffic.ClientId), value);
         }
 
-        private async Task<CachedGaUserId> GetCachedUserIdAsync(string clientId)
+        private async Task<CachedGaUserId> GetCachedUserIdAsync(string clientId, string cid = null)
         {
             var cachedGaUserId = new CachedGaUserId();
             var trackerUser = await _trackerUserRepository.GetGaUserAsync(clientId);
 
             if (trackerUser == null)
             {
-                var gaUser = GaUser.CreateNew(clientId);
+                var gaUser = GaUser.CreateNew(clientId, cid);
                 
                 await _trackerUserRepository.AddAsync(gaUser);
                 
@@ -110,7 +110,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             {
                 if (string.IsNullOrEmpty(trackerUser.Cid))
                 {
-                    cachedGaUserId.GaCid = GaUser.GenerateNewCid();
+                    cachedGaUserId.GaCid = string.IsNullOrEmpty(cid) ? GaUser.GenerateNewCid() : cid;
                     
                     await _trackerUserRepository.AddAsync(new GaUser{ClientId = trackerUser.ClientId, Cid = cachedGaUserId.GaCid, TrackerUserId = trackerUser.TrackerUserId});
                 }

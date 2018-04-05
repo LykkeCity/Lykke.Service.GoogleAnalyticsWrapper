@@ -74,19 +74,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         Task<HttpOperationResponse<ErrorResponse>> AddGaUserTrafficWithHttpMessagesAsync(GaTrafficModel model = default(GaTrafficModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Adds client GA cid
-        /// </summary>
-        /// <param name='model'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<ErrorResponse>> AddGaUserCidWithHttpMessagesAsync(GaUserModel model = default(GaUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Checks service is alive
         /// </summary>
         /// <param name='customHeaders'>

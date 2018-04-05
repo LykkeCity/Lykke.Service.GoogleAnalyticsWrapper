@@ -11,5 +11,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Models
         public string UserAgent { get; set; }
         public string ClientInfo { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string Cid { get; set; }
+        public string Traffic { get; set; }
     }
 }

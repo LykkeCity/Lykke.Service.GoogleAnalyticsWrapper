@@ -5,7 +5,6 @@
         public string Id { get; set; }
         public string AssetId { get; set; }
         public double Amount { get; set; }
-        public GaTraffic.GaTraffic Traffic { get; set; }
         public string Name { get; set; }
         
         public static GaTransaction Create(TransactionInfo transaction, double amount, string assetId)

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Common;
 using Lykke.Common.ApiLibrary.Extensions;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain;
+using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Lykke.Service.GoogleAnalyticsWrapper.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,15 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
     public class TrackerController : Controller
     {
         private readonly IGaTrackerService _gaTrackerService;
+        private readonly IGaUserService _gaUserService;
 
         public TrackerController(
-            IGaTrackerService gaTrackerService
+            IGaTrackerService gaTrackerService,
+            IGaUserService gaUserService
         )
         {
             _gaTrackerService = gaTrackerService;
+            _gaUserService = gaUserService;
         }
         
         /// <summary>
@@ -40,13 +44,22 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!model.UserId.IsValidPartitionOrRowKey())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(model.UserId)} value"));
 
+            if (!string.IsNullOrEmpty(model.Traffic))
+            {
+                var traffic = GaTraffic.Parse(model.UserId, model.Traffic);
+                if (traffic != null)
+                    await _gaUserService.AddGaUserTrafficAsync(traffic);
+            }
+
             await _gaTrackerService.SendEventAsync(new TrackerInfo
                 {
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
                     ClientInfo = model.ClientInfo,
                     Ip = model.Ip,
-                    CreatedAt = model.CreatedAt
+                    CreatedAt = model.CreatedAt,
+                    Cid = model.Cid,
+                    Traffic = model.Traffic
                 },
                 TrackerCategories.Users, TrackerEvents.UserRegistered);
             
@@ -75,7 +88,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
                     UserId = model.UserId,
                     UserAgent = model.UserAgent,
                     ClientInfo = model.ClientInfo,
-                    Ip = model.Ip
+                    Ip = model.Ip,
+                    Cid = model.Cid,
+                    Traffic = model.Traffic
                 },
                 TrackerCategories.Users, TrackerEvents.KycCompleted);
             

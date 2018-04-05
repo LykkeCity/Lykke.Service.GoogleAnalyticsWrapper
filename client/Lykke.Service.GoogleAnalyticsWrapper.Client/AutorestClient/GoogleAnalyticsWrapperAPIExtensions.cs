@@ -112,38 +112,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             }
 
             /// <summary>
-            /// Adds client GA cid
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='model'>
-            /// </param>
-            public static ErrorResponse AddGaUserCid(this IGoogleAnalyticsWrapperAPI operations, GaUserModel model = default(GaUserModel))
-            {
-                return operations.AddGaUserCidAsync(model).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds client GA cid
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='model'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ErrorResponse> AddGaUserCidAsync(this IGoogleAnalyticsWrapperAPI operations, GaUserModel model = default(GaUserModel), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AddGaUserCidWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Checks service is alive
             /// </summary>
             /// <param name='operations'>
