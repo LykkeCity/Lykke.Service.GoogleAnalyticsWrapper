@@ -192,7 +192,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         {
             var data = model.Transform();
 
-            _log.WriteInfo(nameof(SendDataAsync), data, "sending request to GA");
+            _log.WriteInfo(nameof(SendDataAsync), data, model.Type);
 
             HttpResponseMessage response = await _gaSettings.ApiUrl
                 .WithHeader("User-Agent", model.UserAgent)
