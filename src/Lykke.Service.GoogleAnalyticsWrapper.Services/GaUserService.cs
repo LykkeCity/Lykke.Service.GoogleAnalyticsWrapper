@@ -116,6 +116,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 }
                 
                 cachedGaUserId.GaUserId = trackerUser.TrackerUserId;
+                cachedGaUserId.GaCid = trackerUser.Cid;
             }
                     
             return cachedGaUserId;
