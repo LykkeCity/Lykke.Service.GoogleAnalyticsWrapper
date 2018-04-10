@@ -108,15 +108,17 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             }
             else
             {
-                if (string.IsNullOrEmpty(trackerUser.Cid))
+                string userCid = trackerUser.Cid;
+                
+                if (string.IsNullOrEmpty(userCid))
                 {
-                    cachedGaUserId.GaCid = string.IsNullOrEmpty(cid) ? GaUser.GenerateNewCid() : cid;
+                    userCid = string.IsNullOrEmpty(cid) ? GaUser.GenerateNewCid() : cid;
                     
-                    await _trackerUserRepository.AddAsync(new GaUser{ClientId = trackerUser.ClientId, Cid = cachedGaUserId.GaCid, TrackerUserId = trackerUser.TrackerUserId});
+                    await _trackerUserRepository.AddAsync(new GaUser{ClientId = trackerUser.ClientId, Cid = userCid, TrackerUserId = trackerUser.TrackerUserId});
                 }
                 
                 cachedGaUserId.GaUserId = trackerUser.TrackerUserId;
-                cachedGaUserId.GaCid = trackerUser.Cid;
+                cachedGaUserId.GaCid = userCid;
             }
                     
             return cachedGaUserId;

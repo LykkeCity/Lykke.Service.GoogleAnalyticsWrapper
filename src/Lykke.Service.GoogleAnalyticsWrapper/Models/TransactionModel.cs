@@ -2,7 +2,7 @@
 
 namespace Lykke.Service.GoogleAnalyticsWrapper.Models
 {
-    public class TransactionModel : TrackEventModel
+    public class TransactionModel
     {
         [Required]
         public string Id { get; set; }
@@ -10,5 +10,10 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Models
         public double Amount { get; set; }
         [Required]
         public string AssetId { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public string Ip { get; set; }
+        public string UserAgent { get; set; }
+        public string ClientInfo { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Lykke.Common.Api.Contract.Responses;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
 using Lykke.Logs;
+using Lykke.Logs.Slack;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Settings;
 using Lykke.Service.GoogleAnalyticsWrapper.Modules;
@@ -207,6 +208,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper
             azureStorageLogger.Start();
 
             aggregateLogger.AddLog(azureStorageLogger);
+            
+            var logToSlack = LykkeLogToSlack.Create(slackService, "lykke-service-googleanalyticswrapper", LogLevel.Error | LogLevel.FatalError | LogLevel.Warning);
+            aggregateLogger.AddLog(logToSlack);
 
             return aggregateLogger;
         }

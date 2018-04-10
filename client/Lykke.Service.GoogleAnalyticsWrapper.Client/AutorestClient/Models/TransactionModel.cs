@@ -22,7 +22,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the TransactionModel class.
         /// </summary>
-        public TransactionModel(double amount, string id = default(string), string assetId = default(string), string userId = default(string), string ip = default(string), string userAgent = default(string), string clientInfo = default(string), System.DateTime? createdAt = default(System.DateTime?), string cid = default(string), string traffic = default(string))
+        public TransactionModel(double amount, string id = default(string), string assetId = default(string), string userId = default(string), string ip = default(string), string userAgent = default(string), string clientInfo = default(string))
         {
             Id = id;
             Amount = amount;
@@ -31,9 +31,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
             Ip = ip;
             UserAgent = userAgent;
             ClientInfo = clientInfo;
-            CreatedAt = createdAt;
-            Cid = cid;
-            Traffic = traffic;
             CustomInit();
         }
 
@@ -76,21 +73,6 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient.Models
         /// </summary>
         [JsonProperty(PropertyName = "ClientInfo")]
         public string ClientInfo { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "CreatedAt")]
-        public System.DateTime? CreatedAt { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "Cid")]
-        public string Cid { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "Traffic")]
-        public string Traffic { get; set; }
 
         /// <summary>
         /// Validate the object.
