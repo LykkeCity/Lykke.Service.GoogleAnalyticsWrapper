@@ -30,6 +30,33 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
         {
             if (CreatedAt.HasValue && EventAction == TrackerEvents.UserRegistered)
             {
+                var ms = (DateTime.UtcNow - CreatedAt.Value).Milliseconds;
+                
+                if (Traffic != null)
+                {
+                    return new
+                    {
+                        v = Version,
+                        tid = TrackingId,
+                        t = Type,
+                        ec = EventCategory,
+                        ea = EventAction,
+                        ev = EventValue,
+                        qt = ms,
+                        cid = Cid,
+                        uid = UserId,
+                        cs = Traffic.Source,
+                        cm = Traffic.Medium ,
+                        cn = Traffic.Campaign,
+                        ck = Traffic.Keyword,
+                        sr = ScreenResolution,
+                        uip = Ip,
+                        ua = UserAgent,
+                        av = AppVersion,
+                        an = AppName
+                    };
+                }
+
                 return new
                 {
                     v = Version,
@@ -38,7 +65,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                     ec = EventCategory,
                     ea = EventAction,
                     ev = EventValue,
-                    qt = (DateTime.UtcNow - CreatedAt.Value).Milliseconds,
+                    qt = ms,
                     cid = Cid,
                     uid = UserId,
                     sr = ScreenResolution,
@@ -47,6 +74,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                     av = AppVersion,
                     an = AppName
                 };
+
             }
 
             return new
