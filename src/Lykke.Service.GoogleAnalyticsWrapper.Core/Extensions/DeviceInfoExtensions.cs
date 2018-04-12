@@ -48,7 +48,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions
             if (values.ContainsKey("AppVersion"))
                 deviceInfo.AppVersion = values["AppVersion"];
 
-            deviceInfo.Os = deviceInfo.DeviceType == "android" ? "android" : "iOS";
+            deviceInfo.Os = string.IsNullOrEmpty(deviceInfo.DeviceType) 
+                ? null 
+                : deviceInfo.DeviceType == "android" ? "android" : "iOS";
         }
 
         public static string GetUserAgentString(this DeviceInfo deviceInfo)

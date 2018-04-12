@@ -28,7 +28,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client
         /// <param name="model">traffic info</param>
         /// <returns></returns>
         Task AddGaUserTrafficAsync(GaTrafficModel model);
-
+        
         /// <summary>
         /// Sends event about user registration to GA
         /// </summary>

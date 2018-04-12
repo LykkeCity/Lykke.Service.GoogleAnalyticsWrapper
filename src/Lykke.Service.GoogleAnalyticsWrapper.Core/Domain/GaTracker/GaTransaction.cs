@@ -5,7 +5,6 @@
         public string Id { get; set; }
         public string AssetId { get; set; }
         public double Amount { get; set; }
-        public GaTraffic.GaTraffic Traffic { get; set; }
         public string Name { get; set; }
         
         public static GaTransaction Create(TransactionInfo transaction, double amount, string assetId)
@@ -31,16 +30,19 @@
                 v = Version,
                 tid = TrackingId,
                 t = Type,
+                cid = Cid,
                 uid = UserId,
                 ti = Id,
+                ta = GaParamValue.AffiliateLykke,
                 tr = Amount,
-                ta = Name,
+                ts = 0,
+                tt = 0,
                 cu = AssetId,
                 cs = Traffic?.Source,
                 cm = Traffic?.Medium,
                 cn = Traffic?.Campaign,
                 ck = Traffic?.Keyword,
-                ip = Ip,
+                uip = Ip,
                 ua = UserAgent
             };
         }

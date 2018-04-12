@@ -141,6 +141,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             };
             CustomInitialize();
         }
+        /// <summary>
+        /// Gets gaUserId by client id
+        /// </summary>
         /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -290,6 +293,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Gets information about client traffic
+        /// </summary>
         /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -457,6 +463,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Adds client traffic
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -721,6 +730,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks user registration
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -847,6 +859,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks kyc completed
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -973,6 +988,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks margin order change
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1099,6 +1117,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks withdraw / deposit
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1229,6 +1250,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks cashout fee as a transaction in GA
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1359,6 +1383,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
             return _result;
         }
 
+        /// <summary>
+        /// Tracks trade fee as a transaction in GA
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>

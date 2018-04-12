@@ -10,14 +10,19 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services.CachedModels
         [UsedImplicitly]
         public string GaUserId { get; set; }
 
+        [Key(1)]
+        [UsedImplicitly]
+        public string GaCid { get; set; }
+
         [UsedImplicitly]
         public CachedGaUserId()
         {
         }
 
-        public CachedGaUserId(string userId)
+        public CachedGaUserId(string userId, string cid)
         {
             GaUserId = userId;
+            GaCid = cid;
         }
     }
 }

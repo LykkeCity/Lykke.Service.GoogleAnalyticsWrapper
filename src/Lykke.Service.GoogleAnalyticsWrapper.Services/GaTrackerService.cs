@@ -7,6 +7,7 @@ using Common.Log;
 using Flurl.Http;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker;
+using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaUser;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Services;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Settings.ServiceSettings;
@@ -40,21 +41,16 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _gaSettings = gaSettings;
             _isLive = isLive;
             _transactionAssetId = transactionAssetId;
-            _log = log;
+            _log = log.CreateComponentScope(nameof(GaTrackerService));
         }
 
         public async Task SendEventAsync(TrackerInfo model, string category, string eventName, string eventValue = null)
         {
             var eventCategory = GetCategoryName(category);
-            
             var gaEvent = GaEvent.Create(model, eventCategory, eventName, eventValue);
-            await FillGaHitAsync(gaEvent);
             
-            gaEvent.SessionControl = "start";
+            await FillGaHitAsync(gaEvent);
             await SendDataAsync(gaEvent);
-
-            var gaPageView = GaPageView.Create(gaEvent, "end");
-            await SendDataAsync(gaPageView);
         }
 
         public async Task SendWithdrawDepositEventAsync(WithdrawDepositInfo model)
@@ -105,8 +101,10 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             
             var transaction = GaTransaction.Create(model, Math.Abs(amount), _transactionAssetId);
             await FillGaHitAsync(transaction);
-            transaction.Traffic = await _gaUserService.GetGaUserTrafficAsync(model.UserId);
             await SendDataAsync(transaction);
+            
+            var item = GaItem.Create(transaction);
+            await SendDataAsync(item);
         }
 
         private BaseAssetSettings GetBaseAsset(string assetId)
@@ -173,9 +171,12 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         
         private async Task FillGaHitAsync(GaBaseHit model)
         {
-            string gaUserId = await _gaUserService.GetGaUserIdAsync(model.UserId);
-            model.UserId = gaUserId;
+            GaUser gaUser = await _gaUserService.GetGaUserAsync(model.UserId, model.Cid);
+            model.UserId = gaUser.TrackerUserId;
+            model.Cid = gaUser.Cid;
             model.TrackingId = _gaSettings.ApiKey;
+            
+            model.Traffic = await _gaUserService.GetGaUserTrafficAsync(gaUser.ClientId);
             
             var deviceInfo = new DeviceInfo();
 
@@ -191,10 +192,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         {
             var data = model.Transform();
 
-            if (model is GaEvent || model is GaTransaction)
-            {
-                _log.WriteInfo(nameof(SendDataAsync), data, "sending request to tracker");
-            }
+            _log.WriteInfo(nameof(SendDataAsync), data, model.Type);
 
             HttpResponseMessage response = await _gaSettings.ApiUrl
                 .WithHeader("User-Agent", model.UserAgent)

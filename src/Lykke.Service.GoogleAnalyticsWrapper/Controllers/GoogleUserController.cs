@@ -38,12 +38,12 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
             if (!clientId.IsGuid())
                 return BadRequest(ErrorResponse.Create($"Invalid {nameof(clientId)} value"));
             
-            var gaUserId = await _gaUserService.GetGaUserIdAsync(clientId);
+            var gaUser = await _gaUserService.GetGaUserAsync(clientId);
 
-            if (gaUserId == null)
+            if (gaUser == null)
                 return NotFound();
             
-            return Json(gaUserId);
+            return Json(gaUser.TrackerUserId);
         }
         
         /// <summary>
@@ -67,7 +67,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Controllers
         }
         
         /// <summary>
-        /// Adds information about client traffic
+        /// Adds client traffic
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

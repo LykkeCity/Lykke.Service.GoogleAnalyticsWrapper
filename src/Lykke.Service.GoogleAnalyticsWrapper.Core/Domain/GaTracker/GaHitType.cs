@@ -5,5 +5,6 @@
         public const string GaEvent = "event";
         public const string GaPageView = "pageview";
         public const string GaTransaction = "transaction";
+        public const string GaItem = "item";
     }
 }

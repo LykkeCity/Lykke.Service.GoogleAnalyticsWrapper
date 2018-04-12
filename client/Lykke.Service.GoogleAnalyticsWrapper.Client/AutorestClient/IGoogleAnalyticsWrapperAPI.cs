@@ -34,6 +34,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         JsonSerializerSettings DeserializationSettings { get; }
 
 
+        /// <summary>
+        /// Gets gaUserId by client id
+        /// </summary>
         /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -44,6 +47,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<object>> GetGaUserIdWithHttpMessagesAsync(string clientId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Gets information about client traffic
+        /// </summary>
         /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -54,6 +60,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<object>> GetGaUserTrafficWithHttpMessagesAsync(string clientId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Adds client traffic
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -75,6 +84,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<object>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks user registration
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -85,6 +97,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<ErrorResponse>> UserRegisteredEventWithHttpMessagesAsync(TrackEventModel model = default(TrackEventModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks kyc completed
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -95,6 +110,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<ErrorResponse>> KycCompletedEventWithHttpMessagesAsync(TrackEventModel model = default(TrackEventModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks margin order change
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -105,6 +123,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<ErrorResponse>> MtOrderCreatedEventWithHttpMessagesAsync(TrackEventModel model = default(TrackEventModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks withdraw / deposit
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -115,6 +136,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<ErrorResponse>> WithdrawDepositEventWithHttpMessagesAsync(WithdrawDepositEventModel model = default(WithdrawDepositEventModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks cashout fee as a transaction in GA
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>
@@ -125,6 +149,9 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<ErrorResponse>> TrackCashoutWithHttpMessagesAsync(TransactionModel model = default(TransactionModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Tracks trade fee as a transaction in GA
+        /// </summary>
         /// <param name='model'>
         /// </param>
         /// <param name='customHeaders'>

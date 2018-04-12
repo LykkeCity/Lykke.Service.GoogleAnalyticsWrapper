@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTraffic;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaUser;
 using Lykke.Service.GoogleAnalyticsWrapper.Core.Extensions;
@@ -16,6 +16,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
         private readonly IGaUserRepository _trackerUserRepository;
         private readonly IGaTrafficRepository _trafficRepository;
 
+        [UsedImplicitly]
         public GaUserService(
             IDistributedCache cache,
             IGaUserRepository trackerUserRepository,
@@ -27,15 +28,45 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _trafficRepository = trafficRepository;
         }
         
-        public async Task<string> GetGaUserIdAsync(string clientId)
+        public async Task<GaUser> GetGaUserAsync(string clientId, string cid = null)
         {
             var cachedValue = await _cache.TryGetOrAddAsync(
-                GetUserIdKey(clientId),
-                async () => await GetCachedUserIdAsync(clientId));
+                GetUserInfoKey(clientId),
+                async () => await GetCachedUserIdAsync(clientId, cid));
 
-            return cachedValue?.GaUserId;
+            return new GaUser
+            {
+                ClientId = clientId,
+                TrackerUserId = cachedValue.GaUserId,
+                Cid = cachedValue.GaCid
+            };
         }
-        
+
+        public async Task AddGaUserAsync(string clientId, string cid)
+        {
+            var trackerUser = await _trackerUserRepository.GetGaUserAsync(clientId);
+
+            var gaUser = new GaUser {ClientId = clientId};
+            
+            if (trackerUser == null)
+            {
+                gaUser.TrackerUserId = GaUser.GenerateNewUserId();
+                gaUser.Cid = cid;
+            }
+            else
+            {
+                gaUser.TrackerUserId = trackerUser.TrackerUserId;
+                
+                if (string.IsNullOrEmpty(trackerUser.Cid))
+                    gaUser.Cid = cid;
+            }
+
+            await _trackerUserRepository.AddAsync(gaUser);
+            
+            var value = MessagePackSerializer.Serialize(new CachedGaUserId(gaUser.TrackerUserId, gaUser.Cid));
+            await _cache.SetAsync(GetUserInfoKey(clientId), value);
+        }
+
         public async Task<GaTraffic> GetGaUserTrafficAsync(string clientId)
         {
             var cachedValue = await _cache.TryGetOrAddAsync(
@@ -61,19 +92,33 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             await _cache.SetAsync(GetTrafficKey(traffic.ClientId), value);
         }
 
-        private async Task<CachedGaUserId> GetCachedUserIdAsync(string clientId)
+        private async Task<CachedGaUserId> GetCachedUserIdAsync(string clientId, string cid = null)
         {
             var cachedGaUserId = new CachedGaUserId();
             var trackerUser = await _trackerUserRepository.GetGaUserAsync(clientId);
 
             if (trackerUser == null)
             {
-                cachedGaUserId.GaUserId = Guid.NewGuid().ToString();
-                await _trackerUserRepository.AddAsync(new GaUser{ClientId = clientId, TrackerUserId = cachedGaUserId.GaUserId});
+                var gaUser = GaUser.CreateNew(clientId, cid);
+                
+                await _trackerUserRepository.AddAsync(gaUser);
+                
+                cachedGaUserId.GaUserId = gaUser.TrackerUserId;
+                cachedGaUserId.GaCid = gaUser.Cid;
             }
             else
             {
+                string userCid = trackerUser.Cid;
+                
+                if (string.IsNullOrEmpty(userCid))
+                {
+                    userCid = string.IsNullOrEmpty(cid) ? GaUser.GenerateNewCid() : cid;
+                    
+                    await _trackerUserRepository.AddAsync(new GaUser{ClientId = trackerUser.ClientId, Cid = userCid, TrackerUserId = trackerUser.TrackerUserId});
+                }
+                
                 cachedGaUserId.GaUserId = trackerUser.TrackerUserId;
+                cachedGaUserId.GaCid = userCid;
             }
                     
             return cachedGaUserId;
@@ -88,7 +133,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
                 : new CachedGaTraffic(traffic);
         }
         
-        private static string GetUserIdKey(string clientId) => $"userId:{clientId}";
+        private static string GetUserInfoKey(string clientId) => $"userInfo:{clientId}";
         private static string GetTrafficKey(string clientId) => $"traffic:{clientId}";
     }
 }

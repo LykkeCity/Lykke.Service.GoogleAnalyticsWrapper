@@ -7,6 +7,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.TrackerUser
     {
         public string ClientId { get; set; }
         public string TrackerUserId {get;set;}
+        public string Cid { get; set; }
 
         internal static string GeneratePartitionKey() => "TrackerUser";
         internal static string GenerateRowKey(string clientId) => clientId;
@@ -18,7 +19,8 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.AzureRepositories.TrackerUser
                 PartitionKey = GeneratePartitionKey(),
                 RowKey = GenerateRowKey(src.ClientId),
                 ClientId = src.ClientId,
-                TrackerUserId = src.TrackerUserId
+                TrackerUserId = src.TrackerUserId,
+                Cid = src.Cid
             };
         }
     }
