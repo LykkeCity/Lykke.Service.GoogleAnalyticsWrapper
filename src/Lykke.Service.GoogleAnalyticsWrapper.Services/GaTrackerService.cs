@@ -41,7 +41,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Services
             _gaSettings = gaSettings;
             _isLive = isLive;
             _transactionAssetId = transactionAssetId;
-            _log = log;
+            _log = log.CreateComponentScope(nameof(GaTrackerService));
         }
 
         public async Task SendEventAsync(TrackerInfo model, string category, string eventName, string eventValue = null)
