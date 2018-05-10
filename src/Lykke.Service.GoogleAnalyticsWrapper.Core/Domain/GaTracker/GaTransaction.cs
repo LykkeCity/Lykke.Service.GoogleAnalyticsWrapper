@@ -1,4 +1,6 @@
-﻿namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
+﻿using Common;
+
+namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
     public class GaTransaction : GaBaseHit
     {
@@ -19,7 +21,7 @@
                 Name = transaction.Name,
                 UserAgent = transaction.UserAgent,
                 ClientInfo = transaction.ClientInfo,
-                Ip = transaction.Ip
+                Ip = transaction.Ip.SanitizeIp()
             };
         }
 

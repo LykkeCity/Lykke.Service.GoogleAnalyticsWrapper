@@ -1,4 +1,6 @@
-﻿namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
+﻿using Common;
+
+namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
     public class GaItem : GaTransaction
     {
@@ -14,7 +16,7 @@
                 ClientInfo = transaction.ClientInfo,
                 ScreenResolution = transaction.ScreenResolution,
                 AppVersion = transaction.AppVersion,
-                Ip = transaction.Ip,
+                Ip = transaction.Ip.SanitizeIp(),
                 Id = transaction.Id,
                 Amount = transaction.Amount,
                 AssetId = transaction.AssetId,

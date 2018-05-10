@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Common;
 
 namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
@@ -19,7 +20,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                 Cid = src.Cid,
                 UserAgent = src.UserAgent ?? string.Empty,
                 ScreenResolution = src.ScreenResolution ?? string.Empty,
-                Ip = src.Ip ?? string.Empty,
+                Ip = src.Ip.SanitizeIp() ?? string.Empty,
                 AppVersion = src.AppVersion,
                 ClientInfo = src.ClientInfo
             };
