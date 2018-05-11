@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flurl.Http" Version="2.2.0" />
-    <PackageReference Include="Lykke.Common" Version="4.5.0" />
+    <PackageReference Include="Lykke.Common" Version="6.7.0" />
     <PackageReference Include="Lykke.Service.RateCalculator.Client" Version="1.0.12" />
   </ItemGroup>
 </Project>

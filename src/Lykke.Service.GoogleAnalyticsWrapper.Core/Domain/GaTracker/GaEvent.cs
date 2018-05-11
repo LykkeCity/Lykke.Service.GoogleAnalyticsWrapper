@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 
 namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
 {
@@ -20,7 +21,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
                 UserId = src.UserId,
                 UserAgent = src.UserAgent,
                 ClientInfo = src.ClientInfo,
-                Ip = src.Ip,
+                Ip = src.Ip.SanitizeIp(),
                 CreatedAt = src.CreatedAt,
                 Cid = src.Cid
             };
@@ -30,7 +31,7 @@ namespace Lykke.Service.GoogleAnalyticsWrapper.Core.Domain.GaTracker
         {
             if (CreatedAt.HasValue && EventAction == TrackerEvents.UserRegistered)
             {
-                var ms = (DateTime.UtcNow - CreatedAt.Value).Milliseconds;
+                var ms = Convert.ToInt32((DateTime.UtcNow - CreatedAt.Value).Add(TimeSpan.FromSeconds(1)).TotalMilliseconds);
                 
                 if (Traffic != null)
                 {
